@@ -1,9 +1,12 @@
 import HomeScreen from "../pages/HomeScreen";
 import PlanetsList from "../pages/PlanetsList";
 
+//indexed access types
 type Routes = {
   [key: `/${string}`]: () => string;
 };
+
+type Routes1 = Record<`/${string}`, () => string>;
 
 const routes: Routes = {
   "/": HomeScreen,
