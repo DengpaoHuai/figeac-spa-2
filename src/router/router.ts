@@ -1,5 +1,7 @@
-import HomeScreen from "../pages/HomeScreen";
-import PlanetsList from "../pages/PlanetsList";
+import CreateBeer from '../pages/CreateBeer';
+import HomeScreen from '../pages/HomeScreen';
+import ListBeer from '../pages/ListBeer';
+import PlanetsList from '../pages/PlanetsList';
 
 //indexed access types
 type Routes = {
@@ -9,16 +11,18 @@ type Routes = {
 type Routes1 = Record<`/${string}`, () => string>;
 
 const routes: Routes = {
-  "/": HomeScreen,
-  "/planets": PlanetsList,
+  '/': HomeScreen,
+  '/planets': PlanetsList,
+  '/beers': ListBeer,
+  '/create-beer': CreateBeer,
 };
 
 function router() {
-  const content = document.getElementById("app");
+  const content = document.getElementById('app');
   const path = window.location.pathname as `/${string}`;
 
   if (content) {
-    content.innerHTML = "";
+    content.innerHTML = '';
     let maPage = routes[path] ?? null;
 
     if (maPage) {
@@ -27,6 +31,6 @@ function router() {
   }
 }
 
-window.addEventListener("popstate", router);
+window.addEventListener('popstate', router);
 
 export default router;
