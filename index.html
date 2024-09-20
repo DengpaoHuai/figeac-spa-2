@@ -5,6 +5,26 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + TS</title>
+    <style>
+      .loader {
+        width: 20px;
+        height: 20px;
+        border-radius: 80px;
+        border: 5px solid;
+        border-color: black;
+        border-top-color: white;
+        animation: rotate 1s infinite;
+      }
+      @keyframes rotate {
+        from {
+          transform: rotateZ(0deg);
+        }
+
+        to {
+          transform: rotateZ(380deg);
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>

@@ -19,7 +19,7 @@ type PlanetResponse = {
   count: number;
   next: string | null;
   previous: string | null;
-  results: Planet[];
+  results: Array<Planet>;
 };
 
 const PlanetsList = () => {
@@ -31,9 +31,22 @@ const PlanetsList = () => {
   };
 
   const getData = async (url: string) => {
-    // document.getElementById("monsuperloader").style.display = "block";
-    ///document.getElementById("next").disabled = false;
-    // document.getElementById("previous").disabled = false;
+    (
+      document.getElementById("monsuperloader") as HTMLDivElement
+    ).style.display = "block";
+    const nextButton = document.getElementById(
+      "next"
+    ) as HTMLButtonElement | null;
+    if (nextButton) {
+      nextButton.disabled = true;
+    }
+    const previousButton = document.getElementById(
+      "previous"
+    ) as HTMLButtonElement | null;
+    if (previousButton) {
+      previousButton.disabled = true;
+    }
+    //(document.getElementById("previous") as HTMLButtonElement).disabled = true;
     const list = document.getElementById("list");
     list?.remove();
     const div = document.createElement("div");
@@ -43,10 +56,13 @@ const PlanetsList = () => {
     try {
       const result = await fetch(url);
       const data: PlanetResponse = await result.json();
-      //   document.getElementById("monsuperloader").style.display = "none";
+      (
+        document.getElementById("monsuperloader") as HTMLDivElement
+      ).style.display = "none";
       planetResponse = data;
-      //  if (!data.next) document.getElementById("next").disabled = true;
-      //  if (!data.previous) document.getElementById("previous").disabled = true;
+      data.next && nextButton && (nextButton.disabled = false);
+      data.previous && previousButton && (previousButton.disabled = false);
+
       data.results.forEach((planet) => {
         const p = document.createElement("p");
         p.innerText = planet.name;
@@ -58,6 +74,8 @@ const PlanetsList = () => {
   };
 
   document.addEventListener("DOMContentLoaded", () => {
+    getData("https://swapi.dev/api/planets");
+
     document.getElementById("next")?.addEventListener("click", () => {
       if (planetResponse.next) {
         getData(planetResponse.next);
@@ -71,9 +89,8 @@ const PlanetsList = () => {
     });
   });
 
-  getData("https://swapi.dev/api/planets");
   return `
-  
+  <div id="monsuperloader" class="loader"></div>
   <div id="planets">
   <h1>Planets</h1>
     <div id="list">
